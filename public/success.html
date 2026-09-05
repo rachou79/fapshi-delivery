@@ -11,8 +11,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    min-height: 100vh;
     margin: 0;
+    padding: 20px;
   }
   .card {
     background: white;
@@ -33,6 +34,15 @@
     text-decoration: none;
     border-radius: 8px;
     font-weight: 600;
+  }
+  .note {
+    margin-top: 16px;
+    padding: 12px;
+    background: #fef3c7;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #92400e;
+    text-align: left;
   }
   .loader {
     border: 3px solid #eee;
@@ -71,6 +81,9 @@
             <h1>Paiement confirmé ✅</h1>
             <p>Merci pour votre achat ! Cliquez ci-dessous pour télécharger votre produit.</p>
             <a class="btn" href="${data.downloadUrl}" target="_blank">Télécharger le fichier</a>
+            <div class="note">
+              ⚠️ Google Drive peut afficher un message disant qu'il ne peut pas analyser le fichier (car il est volumineux). C'est normal — cliquez simplement sur <strong>"Télécharger quand même"</strong> pour continuer.
+            </div>
           `;
         } else {
           card.innerHTML = `
