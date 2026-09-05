@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Le Dernier Message - Saison 1</title>
+</head>
+<body style="font-family: sans-serif; background: #f5f5f7; margin: 0; padding: 20px; display: flex; justify-content: center;">
+  <div style="background: white; padding: 30px; border-radius: 16px; max-width: 400px; width: 100%; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+    <h1 style="font-size: 22px;">Le Dernier Message — Saison 1</h1>
+    <p style="color: #555; font-size: 14px;">Série thriller et mystère en 10 épisodes.</p>
+    <div style="font-size: 20px; font-weight: bold; color: #16a34a; margin: 16px 0;">5 000 XAF</div>
+
+    <a id="buyLink" href="#" style="display: block; padding: 16px; background: #16a34a; color: white; text-decoration: none; border-radius: 10px; font-weight: bold;">
+      Acheter maintenant
+    </a>
+
+    <p id="status" style="margin-top: 12px; font-size: 13px; color: #dc2626;"></p>
+  </div>
+
+  <script>
+    document.getElementById("buyLink").addEventListener("click", function(e) {
+      e.preventDefault();
+      var statusEl = document.getElementById("status");
+      var linkEl = document.getElementById("buyLink");
+      linkEl.textContent = "Chargement...";
+      statusEl.textContent = "";
+
+      fetch("/api/initiate-pay", { method: "POST" })
+        .then(function(response) { return response.json(); })
+        .then(function(data) {
+          if (data.success && data.paymentLink) {
+            window.location.href = data.paymentLink;
+          } else {
+            statusEl.textContent = "Erreur : " + (data.error || "réessaie");
+            linkEl.textContent = "Acheter maintenant";
+          }
+        })
+        .catch(function(err) {
+          statusEl.textContent = "Erreur de connexion : " + err.message;
+          linkEl.textContent = "Acheter maintenant";
+        });
+    });
+  </script>
+</body>
+</html>
